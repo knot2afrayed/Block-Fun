@@ -125,6 +125,14 @@ class GameViewController: UIViewController {
         setupScene()
         setupCamera()
         spawnShape()
+        let myFloor = SCNFloor()
+        myFloor.reflectivity = 10
+        
+        let myFloorNode = SCNNode(geometry: myFloor)
+       myFloorNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+        myFloorNode.physicsBody?.isAffectedByGravity = false
+        myFloorNode.position = SCNVector3(x: 0, y: -10, z: 0)
+        scnScene.rootNode.addChildNode(myFloorNode)
     }
     func setupView() {
         scnView = self.view as! SCNView
@@ -188,9 +196,9 @@ class GameViewController: UIViewController {
         // 4
         geometryNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
         scnScene.rootNode.addChildNode(geometryNode)
-        let delayActionSeq = SCNAction.fadeOut(duration: 1)
+        //let delayActionSeq = SCNAction.fadeOut(duration: 1)
        // let removeNode = SCNAction.removeFromParentNode()
-        geometryNode.runAction(delayActionSeq)
+        //geometryNode.runAction(delayActionSeq)
       //  geometryNode.runAction(removeNode)
     }
 }
@@ -199,7 +207,7 @@ extension GameViewController: SCNSceneRendererDelegate {
     // 2
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         // 3
-        if counter < 300{
+        if counter < 100{
         spawnShape()
         }
         }
